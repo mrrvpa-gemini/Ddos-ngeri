@@ -50,7 +50,7 @@ target = input("\033[93mEnter IP/Url : \033[0m").strip()
 if not target.startswith("http"):
     target = "http://" + target                                                                       
 port = 80
-threads = 10000
+threads = 5000
 delay = 0.005
 
 user_agents = [
