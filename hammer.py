@@ -23,7 +23,7 @@ if target.startswith("http"):
 else:
     host = target
 
-threads = 1500
+threads = 5000
 
 try:
     with open("user.db", "r") as f:
